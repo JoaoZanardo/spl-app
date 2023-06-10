@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import io from 'socket.io-client';
 import './style.css';
 import QRCode from 'react-qr-code';
@@ -8,7 +8,6 @@ import {
     VacancyStatus
 } from '../../types';
 import Api from '../../hooks/useApi';
-import { vehicleIdFactory } from '../../helpers';
 
 const openVacancy = {
     bgColor: 'rgb(92, 184, 92)',
@@ -36,34 +35,12 @@ export const HomePage = (): JSX.Element => {
     const [openQrCodeWarningBox, setOpenQrCodeWarningBox] = useState<boolean>(false);
     const [qrCode, setQrCode] = useState<string>('');
 
-    useEffect(() => {
-        const queryParams = new URLSearchParams(location.search);
-        const coordsQuery = queryParams.get('coords');
-        const vacancyQuery = queryParams.get('vacancy');
-        if (coordsQuery && vacancyQuery) {
-            socket.emit('qrCodeScanned');
-            setTimeout(() => {
-                (async () => {
-                    console.log('BEFORE');
-                    await Api.reserveVacancy({
-                        vehicle_id: vehicleIdFactory(),
-                        vacancy_number: Number(JSON.parse(vacancyQuery).id)
-                    });
-                })();
-                const formattedCoords = coordsQuery!.replace(/,/g, '.').trim();
-                window.location.replace('https://www.google.com/maps/dir/?api=1&origin=' +
-                    encodeURIComponent('-22.705561746328065, -47.65297798509142')
-                    + "&destination=" + encodeURIComponent(formattedCoords));
-            }, 500);
-        }
-    }, []);
-
     const handleVacancyClick = (vacancy: Vacancy): void => {
         if (vacancy.status === 'open') {
             setVacancy(vacancy);
             setOpenWarningBox(true);
             setQrCode(
-                `${baseUrl}/?coords=${vacancy.coords.replace(' ', '%20')}&vacancy=${JSON.stringify(vacancy)}`
+                `${baseUrl}/reserve/?coords=${vacancy.coords.replace(' ', '%20')}&vacancy=${JSON.stringify(vacancy)}`
             );
         }
     }
