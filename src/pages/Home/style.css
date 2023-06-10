@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif
+}
+
+body {
+    /* background-color: #333; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.parking-title {
+    margin-top: 30px;
+}
+
+.parking-title h1 {
+    color: white;
+    font-size: 60px;
+}
+
+#parking-lot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 130px;
+}
+
+.vacancy {
+    cursor: pointer;
+    width: 150px;
+    height: 300px;
+    margin: 0 50px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+#warning-box-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    position: absolute;
+}
+
+.warning-box {
+    border-top: 8px solid #ffa500;
+    border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 200px;
+    background-color: white;
+}
+
+.warning-box .message {
+    margin-right: 7px;
+    display: flex;
+    flex: 4;
+    border-bottom: 1px solid #969090;
+}
+
+.warning-box .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 2;
+}
+
+.warning-box .buttons div {
+    margin-right: 20px;
+}
+
+.warning-box .buttons div {
+    cursor: pointer;
+    font-size: 17px;
+    border: 2px solid #006FE6;
+}
+
+.warning-box .buttons div:hover {
+    opacity: 0.8;
+}
+
+.warning-box .buttons .back {
+    color: #006FE6;
+    padding: 3px 13px;
+}
+
+.warning-box .buttons #reserve-button {
+    background-color: #006FE6;
+    color: white;
+    padding: 3px 13px;
+}
+
+.message .icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 2;
+}
+
+.message .text {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    flex: 6;
+}
+
+.message .text .title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.message .text .description {
+    color: #262424;
+}
+
+.qrCode {
+    align-items: center;
+    height: 400px;
+    padding: 25px;
+}
+
+.qrCode .title {
+    font-size: 23px;
+}
+
+.qrCode .qrCodeView {
+    margin: 10px;
+}
+
+.qrCode .cancel {
+    cursor: pointer;
+    font-size: 17px;
+    border: 0;
+    background-color: #ac0f0f;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 25px;
+}
+
+.qrCode .cancel:hover {
+    opacity: 0.8;
+}
