@@ -1,7 +1,9 @@
-import { Route, Routes } from "react-router-dom"
-import { HomePage } from "./pages/Home";
-import { AdminPage } from "./pages/Admin";
-import { RedirectPage } from "./pages/Redirect";
+import { Route, Routes } from "react-router-dom";
+import { 
+    AdminPage, 
+    HomePage, 
+    RedirectPage 
+} from "./pages";
 
 export const App = () => {
     return (
