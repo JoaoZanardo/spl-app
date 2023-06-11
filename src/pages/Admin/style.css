@@ -1,5 +1,11 @@
+.main {
+  width: 100%;
+  height: 46.5rem;
+  background-color: #fff;
+}
+
 .title-admin {
-  font-size: 45px;
+  font-size: 50px;
   margin-top: 50px;
   text-align: center;
 }

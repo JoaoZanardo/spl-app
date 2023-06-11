@@ -31,7 +31,7 @@ export const AdminPage = () => {
     };
 
     return (
-        <>
+        <div className='main'>
             <h1 className="title-admin">Admin Page - Parking Lot</h1>
             <div className="container">
                 <table>
@@ -97,6 +97,6 @@ export const AdminPage = () => {
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 };
