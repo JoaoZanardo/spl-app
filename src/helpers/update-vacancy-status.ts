@@ -1,20 +1,12 @@
 import Api from "../hooks/useApi";
-import { StylingVacancy, VacancyInfoFromSerial, VacancyStatus } from "../types";
-
-const openVacancy = {
-    bgColor: 'rgb(92, 184, 92)',
-    bdColor: 'rgb(76, 174, 76)'
-}
-
-const reservedVacancy = {
-    bgColor: 'rgb(239, 168, 36)',
-    bdColor: 'rgb(204, 131, 4)'
-}
-
-const occupiedVacancy = {
-    bgColor: 'rgb(219, 29, 29)',
-    bdColor: 'rgb(204, 8, 8)'
-}
+import { 
+    OccupiedVacancy,
+    OpenedVacancy,
+    ReservedVacancy,
+    StylingVacancy, 
+    VacancyInfoFromSerial, 
+    VacancyStatus 
+} from "../types";
 
 export const updateVacancyStatus = async (
     data: VacancyInfoFromSerial, 
@@ -26,8 +18,8 @@ export const updateVacancyStatus = async (
     if (vacancyIndex === -1) {
         return ([...vacancies, {
             id: vacancyNumber,
-            bgColor: openVacancy.bgColor,
-            bdColor: openVacancy.bdColor,
+            bgColor: OpenedVacancy.bgColor,
+            bdColor: OpenedVacancy.bdColor,
             coords,
             status: 'open'
         }]);
@@ -46,14 +38,14 @@ export const updateVacancyStatus = async (
             await Api.setOccupied({ vacancy_number: Number(vacancy.id) });
         }
         const updatedVacancy = {
-            ...vacancy, bgColor: occupiedVacancy.bgColor, bdColor: occupiedVacancy.bdColor, status: 'occupied'
+            ...vacancy, bgColor: OccupiedVacancy.bgColor, bdColor: OccupiedVacancy.bdColor, status: 'occupied'
         };
         return([
             ...vacancies.slice(0, vacancyIndex), updatedVacancy, ...vacancies.slice(vacancyIndex + 1)
         ]);
     } else if (vacancyStatus === VacancyStatus.RESERVED) {
         const updatedVacancy = {
-            ...vacancy, bgColor: reservedVacancy.bgColor, bdColor: reservedVacancy.bdColor, status: 'reserved'
+            ...vacancy, bgColor: ReservedVacancy.bgColor, bdColor: ReservedVacancy.bdColor, status: 'reserved'
         };
         return ([
             ...vacancies.slice(0, vacancyIndex), updatedVacancy, ...vacancies.slice(vacancyIndex + 1)
@@ -66,7 +58,7 @@ export const updateVacancyStatus = async (
         }
         // set Vacancy isOccupied to false
         // set Vacancy History end_date
-        const updatedVacancy = { ...vacancy, bgColor: openVacancy.bgColor, bdColor: openVacancy.bdColor, status: 'open' };
+        const updatedVacancy = { ...vacancy, bgColor: OpenedVacancy.bgColor, bdColor: OpenedVacancy.bdColor, status: 'open' };
         return([
             ...vacancies.slice(0, vacancyIndex), updatedVacancy, ...vacancies.slice(vacancyIndex + 1)
         ]);

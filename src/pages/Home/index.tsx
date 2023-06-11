@@ -3,16 +3,12 @@ import io from 'socket.io-client';
 import './style.css';
 import QRCode from 'react-qr-code';
 import {
+    OpenedVacancy,
     StylingVacancy,
     VacancyInfoFromSerial,
     VacancyStatus
 } from '../../types';
 import { reserveVacancy, updateVacancyStatus } from '../../helpers';
-
-const openVacancy = {
-    bgColor: 'rgb(92, 184, 92)',
-    bdColor: 'rgb(76, 174, 76)'
-}
 
 const baseUrlIPV4 = 'http://192.168.0.148';
 const baseUrl = `${baseUrlIPV4}:5173`;
@@ -44,8 +40,8 @@ export const HomePage = (): JSX.Element => {
 
     const handleCancelReservedVacancy = () => {
         if (!vacancy) return;
-        vacancy.bgColor = openVacancy.bgColor;
-        vacancy.bdColor = openVacancy.bdColor;
+        vacancy.bgColor = OpenedVacancy.bgColor;
+        vacancy.bdColor = OpenedVacancy.bdColor;
         localStorage.setItem(vacancy.id, VacancyStatus.OPEN);
         handleBackClick();
     }
