@@ -2,27 +2,11 @@ import { useEffect, useState } from 'react';
 import './style.css';
 import Api from '../../hooks/useApi';
 import moment from 'moment';
+import { DatabaseVacancy, VacancyHistory } from '../../types';
 moment.locale('pt-br');
 
-type Vacancy = {
-    id: string;
-    number: number;
-    coords: string;
-    isOccupied: boolean;
-    created_at: Date;
-}
-
-type VacancyHistory = {
-    id: string;
-    vacancy_id: string;
-    vehicle_id: string;
-    start_date: string;
-    end_date: string;
-    created_at: Date;
-}
-
 export const AdminPage = () => {
-    const [vacancies, setVacancies] = useState<Vacancy[]>([]);
+    const [vacancies, setVacancies] = useState<DatabaseVacancy[]>([]);
     const [vacancyHistory, setVacancyHistory] = useState<VacancyHistory[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -34,7 +18,7 @@ export const AdminPage = () => {
         })();
     }, []);
 
-    const handleSeeHistoryClick = async (vacancy: Vacancy) => {
+    const handleSeeHistoryClick = async (vacancy: DatabaseVacancy) => {
         const { status, data } = await Api.getVancacyStories(vacancy.id);
         if (status !== 200) return;
         setVacancyHistory(data.stories);

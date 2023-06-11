@@ -1,4 +1,4 @@
-export type Vacancy = {
+export type StylingVacancy  = {
     id: string;
     bgColor: string;
     bdColor: string;

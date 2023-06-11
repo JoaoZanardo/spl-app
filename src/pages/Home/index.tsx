@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 import './style.css';
 import QRCode from 'react-qr-code';
 import {
-    Vacancy,
+    StylingVacancy,
     VacancyInfoFromSerial,
     VacancyStatus
 } from '../../types';
@@ -29,13 +29,13 @@ const baseUrl = `${baseUrlIPV4}:5173`;
 const socket = io(`${baseUrlIPV4}:8080`);
 
 export const HomePage = (): JSX.Element => {
-    const [vacancy, setVacancy] = useState<Vacancy | null>(null);
-    const [vacancies, setVacancies] = useState<Vacancy[]>([]);
+    const [vacancy, setVacancy] = useState<StylingVacancy | null>(null);
+    const [vacancies, setVacancies] = useState<StylingVacancy[]>([]);
     const [openWarningBox, setOpenWarningBox] = useState<boolean>(false);
     const [openQrCodeWarningBox, setOpenQrCodeWarningBox] = useState<boolean>(false);
     const [qrCode, setQrCode] = useState<string>('');
 
-    const handleVacancyClick = (vacancy: Vacancy): void => {
+    const handleVacancyClick = (vacancy: StylingVacancy): void => {
         if (vacancy.status === 'open') {
             setVacancy(vacancy);
             setOpenWarningBox(true);
