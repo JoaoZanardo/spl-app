@@ -49,7 +49,7 @@ export const AdminPage = () => {
                                 <tr key={v.number}>
                                     <td>{v.number}</td>
                                     <td>{v.isOccupied ? 'OCCUPIED' : 'OPEN'}</td>
-                                    <td>{v.coords}</td>
+                                    <td><a href={`https://www.google.com/maps?q=${encodeURIComponent(v.coords.replace(/,/g, '.').trim())}`} target='blank'>{v.coords}</a></td>
                                     <td>
                                         <a className="button" onClick={() => handleSeeHistoryClick(v)}>
                                             See
@@ -65,10 +65,10 @@ export const AdminPage = () => {
                     </tbody>
                 </table>
             </div>
-            {isModalOpen && vacancyHistory.length && (
-
+            {isModalOpen && (
                 <div className="modal">
                     <div className="modal-content">
+                        <h2>Vacancy History</h2>
                         <table>
                             <thead>
                                 <tr>
@@ -78,16 +78,22 @@ export const AdminPage = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {vacancyHistory.map(vH => (
-                                    <tr className='modal-content-item' key={vH.id}>
-                                        <td>{vH.vehicle_id}</td>
-                                        <td>{moment(vH.start_date).format('LLL')}</td>
-                                        <td>{vH.end_date ? moment(vH.end_date).format('LLL') : "The vancancy is occupied right now"}</td>
+                                {vacancyHistory.length ? (
+                                    vacancyHistory.map(vH => (
+                                        <tr className='modal-content-item' key={vH.id}>
+                                            <td>{vH.vehicle_id}</td>
+                                            <td>{moment(vH.start_date).format('LLL')}</td>
+                                            <td>{vH.end_date ? moment(vH.end_date).format('LLL') : "The vancancy is occupied right now"}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan={4}>No history found</td>
                                     </tr>
-                                ))}
+                                )}
                             </tbody>
                         </table>
-                        <button onClick={closeModal}>Fechar</button>
+                        <button onClick={closeModal} className='button close'>Close</button>
                     </div>
                 </div>
             )}

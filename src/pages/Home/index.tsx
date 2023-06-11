@@ -7,21 +7,11 @@ import {
     VacancyInfoFromSerial,
     VacancyStatus
 } from '../../types';
-import Api from '../../hooks/useApi';
+import { reserveVacancy, updateVacancyStatus } from '../../helpers';
 
 const openVacancy = {
     bgColor: 'rgb(92, 184, 92)',
     bdColor: 'rgb(76, 174, 76)'
-}
-
-const reservedVacancy = {
-    bgColor: 'rgb(239, 168, 36)',
-    bdColor: 'rgb(204, 131, 4)'
-}
-
-const occupiedVacancy = {
-    bgColor: 'rgb(219, 29, 29)',
-    bdColor: 'rgb(204, 8, 8)'
 }
 
 const baseUrlIPV4 = 'http://192.168.0.148';
@@ -46,19 +36,7 @@ export const HomePage = (): JSX.Element => {
     }
 
     const handleReserveClick = async (): Promise<void> => {
-        if (!vacancy) return;
-        if (vacancy.bgColor === occupiedVacancy.bgColor) return;
-        vacancy.bgColor = reservedVacancy.bgColor;
-        vacancy.bdColor = reservedVacancy.bdColor;
-        setTimeout(() => {
-            if (localStorage.getItem(vacancy.id) === VacancyStatus.RESERVED) {
-                localStorage.setItem(vacancy.id, VacancyStatus.OPEN);
-            }
-            vacancy.bgColor = openVacancy.bgColor;
-            vacancy.bdColor = openVacancy.bdColor;
-        }, 30000);
-        socket.emit('vacancyClicked', vacancy.id);
-        localStorage.setItem(vacancy.id, VacancyStatus.RESERVED);
+        reserveVacancy.local(vacancy);
         setOpenWarningBox(false);
         setOpenQrCodeWarningBox(true);
         console.log({ qrCode });
@@ -80,74 +58,12 @@ export const HomePage = (): JSX.Element => {
     }
 
     socket.on('data', async (data: VacancyInfoFromSerial): Promise<void> => {
-        const { isOccupied, vacancyNumber, coords } = data;
-        const vacancyIndex = vacancies.findIndex(v => v.id === vacancyNumber);
-
-        if (vacancyIndex === -1) {
-            setVacancies([...vacancies, {
-                id: vacancyNumber,
-                bgColor: openVacancy.bgColor,
-                bdColor: openVacancy.bdColor,
-                coords,
-                status: 'open'
-            }]);
-            return;
-        }
-
-        const vacancy = vacancies[vacancyIndex];
-        const vacancyStatus = localStorage.getItem(vacancyNumber);
-
-        if (isOccupied) {
-            // delete Vacancy_Reservation
-            // set Vacancy isOccupied to true
-            // create a Vacancy_History
-            if (!vacancyStatus || vacancyStatus !== VacancyStatus.OCCUPIED) {
-                console.log('OCCUPIED');
-                localStorage.setItem(vacancyNumber, VacancyStatus.OCCUPIED);
-                await Api.setOccupied({ vacancy_number: Number(vacancy.id) });
-            }
-            const updatedVacancy = {
-                ...vacancy, bgColor: occupiedVacancy.bgColor, bdColor: occupiedVacancy.bdColor, status: 'occupied'
-            };
-            setVacancies([
-                ...vacancies.slice(0, vacancyIndex), updatedVacancy, ...vacancies.slice(vacancyIndex + 1)
-            ]);
-            return;
-        } else if (vacancyStatus === VacancyStatus.RESERVED) {
-            const updatedVacancy = {
-                ...vacancy, bgColor: reservedVacancy.bgColor, bdColor: reservedVacancy.bdColor, status: 'reserved'
-            };
-            setVacancies([
-                ...vacancies.slice(0, vacancyIndex), updatedVacancy, ...vacancies.slice(vacancyIndex + 1)
-            ]);
-        } else {
-            if (!vacancyStatus || vacancyStatus !== VacancyStatus.OPEN) {
-                console.log('OPEN');
-                localStorage.setItem(vacancyNumber, VacancyStatus.OPEN);
-                await Api.setOpen({ vacancy_number: Number(vacancy.id) });
-            }
-            // set Vacancy isOccupied to false
-            // set Vacancy_History end_date
-            const updatedVacancy = { ...vacancy, bgColor: openVacancy.bgColor, bdColor: openVacancy.bdColor, status: 'open' };
-            setVacancies([
-                ...vacancies.slice(0, vacancyIndex), updatedVacancy, ...vacancies.slice(vacancyIndex + 1)
-            ]);
-        }
+        const config = await updateVacancyStatus(data, vacancies);
+        setVacancies(config);
     });
 
     socket.on('changeVacancyColor', (id: string): void => {
-        const vacancyIndex = vacancies.findIndex(v => v.id === id);
-        if (vacancyIndex === -1) return;
-        const vacancy = vacancies[vacancyIndex];
-        vacancy.bgColor = reservedVacancy.bgColor;
-        vacancy.bdColor = reservedVacancy.bdColor;
-        setTimeout(() => {
-            if (localStorage.getItem(id) === VacancyStatus.RESERVED) {
-                localStorage.setItem(id, VacancyStatus.OPEN);
-            }
-            vacancy.bgColor = openVacancy.bgColor;
-            vacancy.bdColor = openVacancy.bdColor;
-        }, 30000);
+        reserveVacancy.external(vacancies, id);
     });
 
     socket.once('disableQrCodeView', () => {
@@ -165,7 +81,7 @@ export const HomePage = (): JSX.Element => {
                                 <div className="title">Deseja reservar essa vaga ?</div>
                                 <div className="description">
                                     Após reservar esta vaga, você terá apenas 10 minutos para se dirigir a ela.
-                                    Após esse período, a vaga ficará disponível para outro cliente reservá-la..
+                                    Após esse período, a vaga ficará disponível para outro cliente reservá-la...
                                 </div>
                             </div>
                         </div>
@@ -198,12 +114,13 @@ export const HomePage = (): JSX.Element => {
                 {vacancies.map(v => (
                     <div
                         key={v.id}
-                        className={'vacancy'}
+                        className='vacancy'
                         style={{ backgroundColor: v.bgColor, borderColor: v.bdColor }}
                         onClick={() => {
                             handleVacancyClick(v)
                         }}
                     >
+                        {v.id}
                     </div>
                 ))}
             </div>

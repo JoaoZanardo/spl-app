@@ -29,6 +29,11 @@ th {
   background-color: #f2f2f2;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+}
+
 .button {
   border-radius: 5px;
   padding: 8px 20px;
@@ -42,6 +47,19 @@ th {
   margin-top: 10px;
   cursor: pointer;
 }
+
+.button:hover {
+  background-color: #338536;
+}
+
+.close {
+  background-color: rgb(254, 35, 35);
+}
+
+.close:hover {
+  background-color: rgb(254, 13, 13);
+  
+} 
 
 .modal {
   position: fixed;
@@ -59,18 +77,12 @@ th {
 .modal-content {
   position: relative;
   background-color: #fff;
-  padding: 100px;
+  padding: 50px;
   border-radius: 5px;
 }
 
-.modal h2 {
-  margin-top: 0;
-}
-
-.modal button {
-  margin-top: 10px;
-}
-
-.modal-content-item {
-  border-bottom: 1px solid red;
+.modal-content h2 {
+  font-size: 30px;
+  margin-bottom: 30px;
+  text-align: center;
 }
