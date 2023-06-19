@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { io } from "socket.io-client";
 import Api from "../../hooks/useApi";
 import { vehicleIdFactory } from "../../helpers";
+import { env } from "../../config/env";
 
-const baseUrlIPV4 = 'http://192.168.0.148';
-const socket = io(`${baseUrlIPV4}:8080`);
+const socket = io(`${env.base_url}:8080`);
 
 export const RedirectPage = (): JSX.Element => {
     useEffect(() => {

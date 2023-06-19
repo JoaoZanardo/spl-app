@@ -9,10 +9,9 @@ import {
     VacancyStatus
 } from '../../types';
 import { reserveVacancy, updateVacancyStatus } from '../../helpers';
+import { env } from '../../config/env';
 
-const baseUrlIPV4 = 'http://192.168.0.148';
-const baseUrl = `${baseUrlIPV4}:5173`;
-const socket = io(`${baseUrlIPV4}:8080`);
+const socket = io(`${env.base_url}:8080`);
 
 export const HomePage = (): JSX.Element => {
     const [vacancy, setVacancy] = useState<StylingVacancy | null>(null);
@@ -26,7 +25,7 @@ export const HomePage = (): JSX.Element => {
             setVacancy(vacancy);
             setOpenWarningBox(true);
             setQrCode(
-                `${baseUrl}/reserve/?coords=${vacancy.coords.replace(' ', '%20')}&vacancy=${JSON.stringify(vacancy)}`
+                `${env.base_url}:5173/reserve/?coords=${vacancy.coords.replace(' ', '%20')}&vacancy=${JSON.stringify(vacancy)}`
             );
         }
     }
