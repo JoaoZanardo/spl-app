@@ -11,7 +11,7 @@ import {
 import { reserveVacancy, updateVacancyStatus } from '../../helpers';
 import { env } from '../../config/env';
 
-const socket = io(`${env.base_url}:8080`);
+const socket = io(`${env.baseUrl}:8080`);
 
 export const HomePage = (): JSX.Element => {
     const [vacancy, setVacancy] = useState<StylingVacancy | null>(null);
@@ -25,7 +25,7 @@ export const HomePage = (): JSX.Element => {
             setVacancy(vacancy);
             setOpenWarningBox(true);
             setQrCode(
-                `${env.base_url}:5173/reserve/?coords=${vacancy.coords.replace(' ', '%20')}&vacancy=${JSON.stringify(vacancy)}`
+                `${env.baseUrl}:5173/reserve/?coords=${vacancy.coords.replace(' ', '%20')}&vacancy=${JSON.stringify(vacancy)}`
             );
         }
     }

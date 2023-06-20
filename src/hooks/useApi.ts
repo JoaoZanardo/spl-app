@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import { env } from '../config/env';
 
 type HttpResponse = {
     status: number;
@@ -18,7 +19,7 @@ class Api {
     private instace: AxiosInstance;
     constructor(provider = axios) {
         this.instace = provider.create({
-            baseURL: 'http://172.17.121.70:8080'
+            baseURL: env.baseUrl
         });
     }
 

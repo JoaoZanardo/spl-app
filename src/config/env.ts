@@ -1,3 +1,3 @@
 export const env = {
-  base_url: 'http://172.17.121.70'
+  baseUrl: 'http://172.17.121.70'
 }

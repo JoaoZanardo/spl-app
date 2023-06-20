@@ -4,7 +4,7 @@ import Api from "../../hooks/useApi";
 import { vehicleIdFactory } from "../../helpers";
 import { env } from "../../config/env";
 
-const socket = io(`${env.base_url}:8080`);
+const socket = io(`${env.baseUrl}:8080`);
 
 export const RedirectPage = (): JSX.Element => {
     useEffect(() => {
