@@ -18,7 +18,7 @@ class Api {
     private instace: AxiosInstance;
     constructor(provider = axios) {
         this.instace = provider.create({
-            baseURL: 'http://192.168.0.148:8080'
+            baseURL: 'http://172.17.121.70:8080'
         });
     }
 

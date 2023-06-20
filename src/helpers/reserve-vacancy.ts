@@ -7,7 +7,7 @@ import {
 import { io } from "socket.io-client";
 import { OccupiedVacancy } from '../types';
 
-const baseUrlIPV4 = 'http://192.168.0.148';
+const baseUrlIPV4 = 'http://172.17.121.70';
 const socket = io(`${baseUrlIPV4}:8080`);
 
 export const reserveVacancy = {
@@ -22,7 +22,7 @@ export const reserveVacancy = {
                 }
                 vacancy.bgColor = OpenedVacancy.bgColor;
                 vacancy.bdColor = OpenedVacancy.bdColor;
-            }, 30000);
+            }, 600000);
             socket.emit('vacancyClicked', vacancy.id);
             localStorage.setItem(vacancy.id, VacancyStatus.RESERVED);
     },
@@ -39,6 +39,6 @@ export const reserveVacancy = {
             }
             vacancy.bgColor = OpenedVacancy.bgColor;
             vacancy.bdColor = OpenedVacancy.bdColor;
-        }, 30000);
+        }, 600000);
     }
 }
