@@ -25,3 +25,5 @@ Siga as instruções abaixo para configurar e executar o App:
 - Configure as variáveis de ambiente no arquivo `/src/config/env` com as informações relevantes para sua aplicação.
 - Execute o App utilizando o comando `npm run dev -- --host "IPV4"`.
 - Certifique-se de ter o Node.js e o servidor backend devidamente configurados e em execução antes de iniciar o App.
+
+**Esse código é apenas uma parte de um projeto maior e faz parte de um sistema mais complexo de controle de estacionamento. Para obter mais detalhes e contexto sobre o projeto, é recomendável verificar o repositório completo do código-fonte, que pode ser encontrado [aqui](https://github.com/JoaoZanardo/SPL).**
