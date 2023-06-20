@@ -4,7 +4,7 @@ O App é uma parte do projeto de estacionamento inteligente, que oferece uma apl
 
 ## Tecnologias Utilizadas
 
-- ReactJS: Biblioteca JavaScript utilizada para construir a interface de usuário interativa.
+- ReactJS: Framework JavaScript utilizada para construir a interface de usuário interativa.
 - I/O: Integração de hardware para comunicação com sensores e motores.
 
 ## Funcionalidades
